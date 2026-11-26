@@ -1,0 +1,239 @@
+/* products.css - lightweight, search-friendly product catalog */
+
+.products-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-16);
+  max-width: 800px;
+  padding: var(--sp-64) 0 var(--sp-48);
+}
+.products-hero h1 {
+  margin: 0;
+}
+.products-hero__intro {
+  max-width: 720px;
+  margin: 0;
+  color: var(--text-mid);
+  font-size: 17px;
+  line-height: 1.65;
+}
+.products-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-12);
+  margin-top: var(--sp-8);
+}
+
+.products-format {
+  padding: 0 0 var(--sp-64);
+}
+.products-format h2 {
+  margin: var(--sp-8) 0 var(--sp-16);
+}
+.products-format__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-16);
+}
+.products-format__item {
+  padding: var(--sp-24);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--white);
+}
+.products-format__item h3 {
+  margin: 0 0 var(--sp-8);
+}
+.products-format__item p {
+  margin: 0;
+  color: var(--text-mid);
+  line-height: 1.6;
+}
+
+/* Borderless lookbook cards. Each card spans five shared rows (tile, type,
+   name, vibe, moods) via subgrid, so a vibe that wraps on one card makes
+   room across the whole row and every line stays level. Row spacing between
+   cards is the card's margin, since grid row-gap would land inside cards. */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--sp-24);
+  row-gap: 0;
+  padding: 0 0 var(--sp-64);
+}
+.product-card {
+  position: relative;
+  display: grid;
+  grid-row: span 5;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  margin-bottom: var(--sp-48);
+}
+.product-card__link {
+  color: inherit;
+  text-decoration: none;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.product-card__media--paper,
+.product-card > img {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  margin-bottom: var(--sp-16);
+  transition: filter var(--transition-fast);
+}
+@media (hover: hover) {
+  .product-card:hover .product-card__media--paper,
+  .product-card:hover > img { filter: brightness(0.97); }
+  .product-card:hover .product-card__link {
+    text-decoration-line: underline;
+    text-decoration-color: var(--hot-pink);
+  }
+}
+.product-card:has(.product-card__link:focus-visible) .product-card__media--paper,
+.product-card:has(.product-card__link:focus-visible) > img {
+  outline: 2px solid var(--hot-pink);
+  outline-offset: 2px;
+}
+.product-card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.product-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background: var(--paper-grey);
+}
+.product-card__image--paper-blend {
+  mix-blend-mode: multiply;
+}
+.product-card__media--paper {
+  background: var(--paper-grey);
+}
+.product-card__media--paper .product-card__image--paper-blend {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+.product-card__body {
+  grid-row: span 4;
+  display: grid;
+  grid-template-rows: subgrid;
+  row-gap: var(--sp-8);
+  align-items: start;
+}
+.product-card__type {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.product-card h2 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.15;
+}
+.product-card__desc,
+.product-card__moods {
+  margin: 0;
+  color: var(--text-mid);
+  line-height: 1.5;
+}
+.product-card__moods {
+  font-size: 13px;
+}
+
+.products-faq {
+  max-width: 800px;
+  padding: 0 0 var(--sp-64);
+}
+.products-faq h2 {
+  margin: 0 0 var(--sp-24);
+}
+/* Accordion rows, matching the product pages' Description / Specs / FAQ. */
+.products-faq__list { margin: 0; }
+.products-faq__item { border-top: 1px solid var(--line); }
+.products-faq__item:last-child { border-bottom: 1px solid var(--line); }
+.products-faq__q {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-16);
+  min-height: 44px;
+  padding: var(--sp-16) 0;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.products-faq__q::-webkit-details-marker { display: none; }
+.products-faq__q::after {
+  content: "+";
+  flex: none;
+  font-size: 20px;
+  font-weight: 500;
+}
+.products-faq__item[open] > .products-faq__q::after { content: "\2212"; }
+.products-faq__q:focus-visible {
+  outline: 2px solid var(--hot-pink);
+  outline-offset: 2px;
+}
+.products-faq__a {
+  padding: 0 0 var(--sp-24);
+  color: var(--text-mid);
+  line-height: 1.65;
+}
+
+@media (max-width: 900px) {
+  .products-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 600px) {
+  .products-hero { padding: var(--sp-48) 0 var(--sp-32); }
+  .products-hero h1 { font-size: 40px; }
+  .products-hero__intro { font-size: 15px; }
+  .products-hero__actions {
+    align-items: stretch;
+    flex-direction: column;
+    width: 100%;
+  }
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: var(--sp-16);
+    padding-bottom: var(--sp-48);
+  }
+  .product-card {
+    grid-row: auto;
+    grid-template-rows: none;
+    grid-template-columns: minmax(120px, 38%) minmax(0, 1fr);
+    column-gap: var(--sp-16);
+    align-items: center;
+    margin-bottom: 0;
+  }
+  .product-card__media--paper,
+  .product-card > img { margin-bottom: 0; }
+  .product-card__body {
+    grid-row: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-8);
+  }
+  .product-card img { height: 100%; }
+  .product-card h2 { font-size: 20px; }
+  .products-format,
+  .products-faq { padding-bottom: var(--sp-48); }
+  .products-format__grid { grid-template-columns: 1fr; }
+  .products-format__item { padding: var(--sp-16); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-card__media--paper,
+  .product-card > img { transition: none; }
+}

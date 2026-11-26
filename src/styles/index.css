@@ -1,0 +1,42 @@
+/* Tailwind v4 without preflight: the original site ships its own reset in
+   global.css, and preflight would restyle headings, lists and buttons that
+   the original CSS relies on. Utilities sit in a cascade layer, so the
+   original (unlayered) CSS always wins where both apply. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Original gimmemwah.com stylesheets, in the order the source pages load them. */
+@import "./site/tokens.css";
+@import "./site/global.css";
+@import "./site/home.css";
+@import "./site/hero-rotator.css";
+@import "./site/home-products.css";
+@import "./site/home-find.css";
+@import "./site/home-locator.css";
+@import "./site/locator-markers.css";
+@import "./site/request.css";
+@import "./site/signup-popup.css";
+@import "./site/signup-discovery.css";
+@import "./site/products.css";
+@import "./site/product-detail.css";
+@import "./site/about.css";
+@import "./site/market.css";
+@import "./site/kiss-labs.css";
+@import "./site/legal.css";
+@import "./site/product-launch.css";
+@import "./site/site-origin.css";
+
+/* Brand tokens exposed to Tailwind utilities (bg-hot-pink, text-ink, …). */
+@theme {
+  --font-sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --color-hot-pink: #ff6ec1;
+  --color-hot-pink-hover: #f259b3;
+  --color-soft-pink: #ffa4dc;
+  --color-pink-wash: #fff0f8;
+  --color-ink: #000000;
+  --color-paper-grey: #f4f4f4;
+  --color-line: #e0e0e0;
+  --color-text-mid: #555555;
+  --color-text-soft: #666666;
+}

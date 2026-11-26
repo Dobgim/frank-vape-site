@@ -1,0 +1,19 @@
+/* legal.css — privacy + terms pages (text-heavy, minimal chrome) */
+
+.legal {
+  max-width: 760px; /* balanced desktop measure; 664px text width after page padding */
+  padding: var(--sp-64) var(--content-pad, 48px);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-mid);
+}
+.legal h1 { margin: var(--sp-12) 0 var(--sp-24) 0; color: var(--ink); }
+.legal h2 { margin: var(--sp-32) 0 var(--sp-12) 0; font-size: 22px; color: var(--ink); }
+.legal p { margin: 0 0 var(--sp-16) 0; }
+.legal a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.legal__lastupdated { font-size: 13px; color: var(--text-soft); margin-bottom: var(--sp-32); }
+
+@media (max-width: 768px) {
+  .legal { padding: var(--sp-32) var(--content-pad-mobile, 16px); }
+  .legal h2 { font-size: 19px; }
+}

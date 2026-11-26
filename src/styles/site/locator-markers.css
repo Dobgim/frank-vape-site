@@ -1,0 +1,146 @@
+/* Locator map symbols, matching row dots and compact legend. */
+/* A consistent 44px target surrounds a 28px visual mark. */
+.loc-pin {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+}
+.loc-pin__mark {
+  width: 28px;
+  height: 28px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hot-pink);
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16);
+}
+.loc-pin__check,
+.loc-pin__clock {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.loc-pin--soon .loc-pin__mark,
+.loc-pin--launch-ordered .loc-pin__mark { background: var(--white); }
+/* Selection replaces the edge, never adds a second ring or hides the symbol. */
+.loc-pin--selected .loc-pin__mark {
+  width: 34px;
+  height: 34px;
+  border: 3px solid var(--ink);
+}
+.loc-pin:focus-visible,
+.marker-cluster:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px var(--white);
+}
+.marker-cluster { display: flex; align-items: center; justify-content: center; }
+.marker-cluster-small,
+.marker-cluster-medium,
+.marker-cluster-large { background: transparent !important; }
+.marker-cluster-small div,
+.marker-cluster-medium div,
+.marker-cluster-large div {
+  margin: 0 !important;
+  box-sizing: border-box;
+  background: var(--white) !important;
+  border: 2px solid var(--text-mid);
+  border-radius: 50% !important;
+  color: var(--ink) !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16);
+  font-family: var(--font) !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.marker-cluster-small span,
+.marker-cluster-medium span,
+.marker-cluster-large span { line-height: 1 !important; }
+.marker-cluster-small div { width: 38px !important; height: 38px !important; font-size: 13px !important; }
+.marker-cluster-medium div { width: 46px !important; height: 46px !important; font-size: 15px !important; }
+.marker-cluster-large div { width: 56px !important; height: 56px !important; font-size: 17px !important; }
+.loc-row__pin {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--hot-pink);
+  border: 2px solid var(--ink);
+  flex-shrink: 0;
+}
+.loc-row__pin--soon,
+.loc-row__pin--launch-ordered { background: var(--white); }
+.loc-row--active .loc-row__pin { border-color: var(--ink); }
+.loc-pill--restocked {
+  background: var(--hot-pink);
+  /* Center the main body of the label, including words with descenders. */
+  padding-block: 4.5px 3.5px;
+}
+.loc-pill--launch,
+.loc-pill--launch-ordered { background: var(--latte-cream); }
+.loc-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 18px;
+  padding: 16px 0 0;
+  margin: 0;
+  list-style: none;
+  font-size: 12px;
+  color: var(--text-mid);
+}
+.loc-legend li { display: inline-flex; align-items: center; gap: 6px; }
+.loc-legend__mark {
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--text-mid);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.loc-legend__mark--restocked { background: var(--paper-grey); }
+
+/* Map controls share the same neutral hierarchy. */
+.leaflet-control-zoom {
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius-btn) !important;
+  overflow: hidden;
+  box-shadow: none !important;
+}
+.leaflet-control-zoom a {
+  background: var(--white) !important;
+  color: var(--ink) !important;
+  border: 0 !important;
+  width: 44px !important;
+  height: 44px !important;
+  line-height: 44px !important;
+  font-family: var(--font);
+  font-weight: 700;
+}
+.leaflet-control-zoom a:first-child { border-bottom: 1px solid var(--line) !important; }
+.leaflet-control-attribution {
+  font-family: var(--font);
+  font-size: 10px;
+  border-radius: 8px 0 0 0;
+}
+
+
+.leaflet-control-zoom a:focus-visible { outline: 3px solid var(--ink); outline-offset: -3px; }

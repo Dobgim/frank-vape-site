@@ -1,0 +1,497 @@
+/* product-detail.css — per-flavor product pages (/products/<slug>), lookbook
+   layout. Spec: docs/superpowers/specs/2026-10-30-product-page-lookbook-design.md */
+
+/* The hero and related row are full-bleed bands (design.md "Full-bleed
+   bands"). 100vw includes a classic scrollbar's width, so clip the sliver
+   it would add rather than show a horizontal scrollbar. */
+body { overflow-x: clip; }
+
+.pd-hero,
+.pd-related {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  box-sizing: border-box;
+  /* Content caps at 1440 like the home column; the band itself reaches the edges. */
+  padding-left: max(var(--content-pad), calc((100vw - 1440px) / 2 + var(--content-pad)));
+  padding-right: max(var(--content-pad), calc((100vw - 1440px) / 2 + var(--content-pad)));
+}
+
+.pd-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: var(--sp-48);
+  align-items: start;
+  padding-top: var(--sp-32);
+  padding-bottom: var(--sp-48);
+}
+.pd-hero__media {
+  aspect-ratio: 1 / 1;
+  background: var(--white);
+  overflow: hidden;
+}
+.pd-hero__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transform: scale(1.08);
+}
+.pd-hero__image--paper-blend {
+  mix-blend-mode: multiply;
+}
+
+/* ---- gallery ------------------------------------------------------------
+   Extra shots ship as plain <img> siblings inside .pd-hero__media. They stay
+   hidden until product-gallery.js promotes the frame to .is-gallery, so a
+   JS-less page renders the single pack shot exactly as it always has. */
+.pd-hero__media img + img { display: none; }
+
+.pd-gallery {
+  position: relative;
+  display: grid;
+  gap: var(--sp-12);
+}
+.pd-hero__media.is-gallery { position: relative; }
+.pd-hero__media.is-gallery img {
+  display: block;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--transition-mid) ease;
+}
+.pd-hero__media.is-gallery img.is-active { opacity: 1; }
+
+/* The pack shot is a cutout scaled up for the editorial crop. The styled and
+   packaging shots are already square with their own coloured ground, so they
+   sit at native scale, keep their colour, and get card corners on white. */
+.pd-hero__media img.pd-gallery__shot--full {
+  transform: none;
+  mix-blend-mode: normal;
+  border-radius: var(--radius-card);
+}
+
+.pd-gallery__count {
+  position: absolute;
+  left: 50%;
+  bottom: var(--sp-24);
+  transform: translateX(-50%);
+  z-index: 3;
+  margin: 0;
+  padding: 5px 11px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--text-mid);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Image arrows live inside the frame and stay quiet, so they never read as
+   flavor navigation (that is the related row below the hero). */
+.pd-gallery__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--text-mid);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition-fast) ease, border-color var(--transition-fast) ease,
+              color var(--transition-fast) ease;
+}
+.pd-gallery__arrow--prev { left: 10px; }
+.pd-gallery__arrow--next { right: 10px; }
+.pd-hero__media.is-gallery:hover .pd-gallery__arrow,
+.pd-gallery__arrow:focus-visible { opacity: 1; }
+@media (hover: none) {
+  .pd-gallery__arrow { display: none; }
+}
+@media (hover: hover) {
+  .pd-gallery__arrow:hover {
+    border-color: var(--hot-pink);
+    color: var(--hot-pink);
+  }
+}
+
+/* Thumbnails sit inside the panel, bottom-left (dots stay hidden on desktop,
+   so the wrapper's bottom edge is the panel's). */
+.pd-gallery__thumbs {
+  position: absolute;
+  left: var(--sp-16);
+  bottom: var(--sp-16);
+  z-index: 3;
+  display: flex;
+  gap: var(--sp-8);
+}
+.pd-gallery__thumb {
+  width: 56px;
+  height: 56px;
+  flex: none;
+  padding: 0;
+  overflow: hidden;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: border-color var(--transition-fast) ease;
+}
+.pd-gallery__thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+/* Thumbnails inherit their source image's class, so the full-bleed shots keep
+   their own colour here too instead of multiplying onto the tile. */
+.pd-gallery__thumb img.pd-gallery__shot--full {
+  mix-blend-mode: normal;
+}
+.pd-gallery__thumb[aria-current="true"] {
+  border: 2px solid var(--ink);
+}
+.pd-gallery__thumb:focus-visible {
+  outline: 2px solid var(--hot-pink);
+  outline-offset: 2px;
+}
+@media (hover: hover) {
+  .pd-gallery__thumb:hover { border-color: var(--hot-pink); }
+}
+
+/* Dots replace the thumbnail strip on phones, where swipe is the primary move. */
+.pd-gallery__dots { display: none; }
+.pd-gallery__dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+  cursor: pointer;
+  transition: width var(--transition-fast) ease, background var(--transition-fast) ease;
+}
+.pd-gallery__dot[aria-current="true"] {
+  width: 20px;
+  background: var(--hot-pink);
+}
+
+/* ---- copy column -------------------------------------------------------- */
+.pd-hero__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-16);
+  padding-top: var(--sp-8);
+}
+.pd-hero__copy .caption {
+  align-self: flex-end;
+  margin: 0 0 var(--sp-16);
+  color: var(--text-soft);
+}
+.pd-hero__copy h1 {
+  /* Product name only (design.md). Never shrunk to avoid wrapping; desktop
+     reserves two lines so a long name does not move anything below it. */
+  font-size: clamp(32px, 3.5vw, 44px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  min-height: calc(2 * 1.05em);
+  margin: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+/* The vibe line wraps to two lines in narrow desktop columns on some
+   flavors; reserve both so FIND A STORE stays put. */
+.pd-hero__vibe {
+  font-size: 17px;
+  line-height: 1.5;
+  min-height: calc(2 * 1.5em);
+  color: var(--text-mid);
+  margin: 0;
+}
+/* Two rows reserved on desktop for the same reason as the name. */
+.pd-moods {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: var(--sp-8);
+  min-height: calc(2 * 32px + var(--sp-8));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pd-moods__pill {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 var(--sp-12);
+  background: var(--paper-grey);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.pd-hero__cta {
+  width: 100%;
+  min-height: 56px;
+  margin-top: var(--sp-8);
+}
+.pd-hero__fine {
+  align-self: stretch;
+  margin: calc(-1 * var(--sp-4)) 0 var(--sp-16);
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+/* ---- accordions --------------------------------------------------------- */
+.pd-acc { align-self: stretch; }
+.pd-acc__item { border-top: 1px solid var(--line); }
+.pd-acc__item:last-child { border-bottom: 1px solid var(--line); }
+.pd-acc__summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: var(--sp-12) 0;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.pd-acc__summary::-webkit-details-marker { display: none; }
+.pd-acc__summary::after {
+  content: "+";
+  font-size: 18px;
+  font-weight: 500;
+}
+.pd-acc__item[open] > .pd-acc__summary::after { content: "\2212"; }
+.pd-acc__summary:focus-visible {
+  outline: 2px solid var(--hot-pink);
+  outline-offset: 2px;
+}
+.pd-acc__body { padding: 0 0 var(--sp-24); }
+.pd-hero__body {
+  color: var(--text-mid);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.pd-specs__grid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--sp-12);
+}
+.pd-specs__cell {
+  background: var(--paper-grey);
+  border-radius: var(--radius-btn);
+  padding: var(--sp-16);
+}
+.pd-specs__cell dt {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin: 0 0 var(--sp-4);
+}
+.pd-specs__cell dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pd-faq__list {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-16);
+}
+.pd-faq__item dt {
+  font-weight: 700;
+  margin: 0 0 var(--sp-4);
+}
+.pd-faq__item dd {
+  margin: 0;
+  color: var(--text-mid);
+  line-height: 1.55;
+}
+
+/* ---- related flavors ---------------------------------------------------- */
+.pd-related {
+  padding-top: var(--sp-32);
+  padding-bottom: var(--sp-64);
+  border-top: 1px solid var(--line);
+}
+.pd-related__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-16);
+  margin-bottom: var(--sp-24);
+}
+.pd-related__head h2 {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
+.pd-related__count {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-soft);
+  font-variant-numeric: tabular-nums;
+}
+/* Arrows straddle the row's outer edges. 100cqw is the row's width, so the
+   top lands on the middle of a tile: track padding + half the tile height
+   (card width × 300/318) − half the button. */
+.pd-related__viewport {
+  position: relative;
+  container-type: inline-size;
+}
+.pd-related__arrow {
+  position: absolute;
+  top: calc(var(--sp-8) + (100cqw - 3 * var(--sp-24)) / 4 * 300 / 318 / 2 - 22px);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--ink) 12%, transparent);
+  color: var(--ink);
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color var(--transition-fast) ease;
+}
+.pd-related__arrow[data-related-prev] { left: 0; transform: translateX(-50%); }
+.pd-related__arrow[data-related-next] { right: 0; transform: translateX(50%); }
+.pd-related__arrow:focus-visible {
+  outline: 2px solid var(--hot-pink);
+  outline-offset: 2px;
+}
+@media (hover: hover) {
+  .pd-related__arrow:hover { border-color: var(--hot-pink); }
+}
+/* The scroller clips at its padding box, so pad it by more than the card's
+   focus ring (2px + 4px offset) and pull it back out with a negative margin. */
+.pd-related__track {
+  display: flex;
+  gap: var(--sp-24);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--sp-8);
+  scrollbar-width: none;
+  list-style: none;
+  margin: calc(-1 * var(--sp-8));
+  padding: var(--sp-8);
+}
+.pd-related__track::-webkit-scrollbar { display: none; }
+.pd-related__item {
+  flex: 0 0 calc((100% - 3 * var(--sp-24)) / 4);
+  scroll-snap-align: start;
+}
+.pd-related__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: var(--radius-card);
+}
+.pd-related__card:focus-visible {
+  outline: 2px solid var(--hot-pink);
+  outline-offset: 4px;
+}
+.pd-related__tile {
+  display: block;
+  aspect-ratio: 318 / 300;
+  margin-bottom: var(--sp-8);
+  padding: var(--sp-24);
+  box-sizing: border-box;
+  background: var(--paper-grey);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.pd-related__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.pd-related__name {
+  font-size: 14px;
+  font-weight: 700;
+}
+.pd-related__type {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--text-soft);
+}
+@media (hover: hover) {
+  .pd-related__card:hover .pd-related__name { color: var(--hot-pink-hover); }
+}
+
+/* Narrow desktop columns (~260–300px) wrap some flavors' pills to a third row. */
+@media (min-width: 769px) and (max-width: 899px) {
+  .pd-moods { min-height: calc(3 * 32px + 2 * var(--sp-8)); }
+}
+
+/* ---- phones ------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .pd-hero,
+  .pd-related {
+    padding-left: var(--content-pad-mobile);
+    padding-right: var(--content-pad-mobile);
+  }
+  .pd-hero {
+    grid-template-columns: 1fr;
+    gap: var(--sp-24);
+    padding-top: var(--sp-24);
+    padding-bottom: var(--sp-32);
+  }
+  .pd-hero__copy { padding-top: 0; }
+  .pd-hero__copy .caption { align-self: flex-start; margin-bottom: 0; }
+  .pd-hero__copy h1 { font-size: 32px; min-height: 0; }
+  .pd-hero__vibe { min-height: 0; }
+  .pd-moods { min-height: 0; }
+  .pd-gallery__thumbs { display: none; }
+  .pd-gallery__dots {
+    display: flex;
+    gap: 7px;
+    justify-content: center;
+  }
+  .pd-gallery__count { bottom: var(--sp-12); }
+  .pd-related__arrow { display: none; }
+  .pd-related__head h2 { font-size: 20px; }
+  .pd-related__item { flex-basis: 70%; }
+}
+
+@media (max-width: 420px) {
+  .pd-hero__copy h1 { font-size: clamp(24px, 7.5vw, 28px); }
+}

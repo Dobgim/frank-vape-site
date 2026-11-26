@@ -1,0 +1,54 @@
+/* Latte Lover banner: copy uses the open left side, with the model on the right. */
+.sm-hero__pic--latte-lover {
+  background: var(--latte-cream);
+}
+.sm-hero__slide[data-hero-slide="latte-lover"] .op-btn--primary {
+  background: var(--latte-cream);
+  color: var(--ink);
+}
+@media (min-width: 769px) {
+  .sm-hero__slide[data-hero-slide="latte-lover"] .sm-hero__art {
+    position: relative;
+  }
+  .sm-hero__slide[data-hero-slide="latte-lover"] .sm-hero__art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--ink) 48%, transparent) 0%, color-mix(in srgb, var(--ink) 32%, transparent) 38%, transparent 62%);
+  }
+  .sm-hero__slide[data-hero-slide="latte-lover"] .sm-hero__copy {
+    width: min(480px, calc(42% - 64px));
+  }
+  .sm-hero__slide[data-hero-slide="latte-lover"] .sm-eyebrow,
+  .sm-hero__slide[data-hero-slide="latte-lover"] .sm-hero__title,
+  .sm-hero__slide[data-hero-slide="latte-lover"] .sm-hero__sub {
+    color: var(--white);
+  }
+  .sm-hero__slide[data-hero-slide="latte-lover"] .op-btn--secondary {
+    background: transparent;
+    color: var(--white);
+    border-color: var(--white);
+  }
+}
+@media (hover: hover) {
+  .sm-hero__slide[data-hero-slide="latte-lover"] .op-btn--primary:hover {
+    background: var(--white);
+    color: var(--ink);
+  }
+}
+@media (min-width: 769px) and (hover: hover) {
+  .sm-hero__slide[data-hero-slide="latte-lover"] .op-btn--secondary:hover {
+    background: color-mix(in srgb, var(--white) 16%, transparent);
+    color: var(--white);
+    border-color: var(--white);
+  }
+}
+@media (max-width: 768px) and (hover: hover) {
+  .sm-hero__slide[data-hero-slide="latte-lover"] .op-btn--secondary:hover {
+    border-color: var(--latte-espresso);
+  }
+}
+@media (max-width: 768px) {
+  .sm-hero__pic--latte-lover { aspect-ratio: 1 / 1; }
+}
