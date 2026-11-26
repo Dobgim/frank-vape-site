@@ -35,7 +35,7 @@ export default function SiteNav() {
     <Link
       to="/wholesale#order"
       className="op-nav__ig relative"
-      aria-label={totalUnits ? `Wholesale order, ${totalUnits} units` : "Wholesale order, empty"}
+      aria-label={totalUnits ? `Cart, ${totalUnits} units` : "Cart, empty"}
     >
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M6 7h12l-1 13H7L6 7Z" />
@@ -52,7 +52,7 @@ export default function SiteNav() {
   const links = (
     <>
       <Link to={isHome ? "#products" : "/#products"} className="op-nav__link">PRODUCTS</Link>
-      <Link to="/wholesale" className="op-nav__link">WHOLESALE</Link>
+      <Link to="/wholesale" className="op-nav__link">ADD TO CART</Link>
     </>
   );
 

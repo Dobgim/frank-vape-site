@@ -44,7 +44,7 @@ function ProductRow({ p }: { p: Product }) {
         <div className="mt-3 flex flex-wrap items-center gap-3">
         <QtyStepper value={qty} onChange={(n) => setQty(Math.max(0, Math.min(MAX_UNITS_PER_LINE, Math.floor(n) || 0)))} label={p.name} />
         <button type="button" className="op-btn op-btn--primary whitespace-nowrap" disabled={qty <= 0} onClick={() => add(p.slug, qty)}>
-          ADD TO ORDER
+          ADD TO CART
         </button>
         </div>
       </div>
@@ -149,12 +149,12 @@ export default function WholesalePage() {
 
         <aside id="order" className="sticky top-[88px] rounded-3xl bg-paper-grey p-7 max-lg:static max-md:p-5" aria-labelledby="wsOrderTitle">
           <div className="flex items-baseline justify-between">
-            <h2 id="wsOrderTitle" className="m-0! text-[22px]! leading-tight! font-bold! tracking-normal!">Your order</h2>
+            <h2 id="wsOrderTitle" className="m-0! text-[22px]! leading-tight! font-bold! tracking-normal!">Your cart</h2>
             <span className="text-[13px] font-semibold text-text-mid">{totalUnits} units</span>
           </div>
 
           {orderLines.length === 0 ? (
-            <p className="m-0 mt-4 rounded-2xl bg-white p-5 text-[14px] text-text-mid">Your order is empty. Add flavors from the list.</p>
+            <p className="m-0 mt-4 rounded-2xl bg-white p-5 text-[14px] text-text-mid">Your cart is empty. Add flavors from the list.</p>
           ) : (
             <ul className="m-0 mt-4 list-none space-y-3 p-0">
               {orderLines.map(({ p, units }) => (

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { PRODUCTS, productBySlug, type Product } from "../data/products";
 import { usePageMeta } from "../hooks/usePageMeta";
-import { LAUNCHES } from "../lib/locator/launch";
+import { useOrder } from "../lib/order";
 import { prefersReducedMotion } from "../lib/dom";
 import NotFoundPage from "./content/NotFoundPage";
 
@@ -166,14 +166,36 @@ function RelatedFlavors({ current }: { current: Product }) {
   );
 }
 
+/** Replaces FIND A STORE: adds one unit to the cart (the licensed-retailer order sheet at /wholesale). */
+function AddToCart({ slug }: { slug: string }) {
+  const { lines, add } = useOrder();
+  const [justAdded, setJustAdded] = useState(false);
+  const inCart = lines[slug] || 0;
+  useEffect(() => {
+    if (!justAdded) return;
+    const t = setTimeout(() => setJustAdded(false), 2000);
+    return () => clearTimeout(t);
+  }, [justAdded]);
+  return (
+    <>
+      <button type="button" className="op-btn op-btn--primary pd-hero__cta" onClick={() => { add(slug, 1); setJustAdded(true); }}>
+        {justAdded ? "ADDED TO CART ✓" : "ADD TO CART"}
+      </button>
+      <p className="pd-hero__fine" role="status" aria-live="polite">
+        {inCart > 0
+          ? <>{inCart} in cart · <Link to="/wholesale#order">View cart &amp; checkout →</Link></>
+          : "Orders accepted from licensed cannabis retailers only."}
+      </p>
+    </>
+  );
+}
+
 /** /products/:slug detail page. */
 export default function ProductDetailPage() {
   const { slug } = useParams();
   const p = productBySlug(slug);
   usePageMeta(p?.title ?? "Not found — MWAH", p?.metaDescription ?? "");
   if (!p) return <NotFoundPage />;
-
-  const findHref = LAUNCHES[p.slug] ? `/?flavor=${p.slug}#find-us` : "/#find-us";
 
   return (
     <main className="page">
@@ -186,8 +208,7 @@ export default function ProductDetailPage() {
           <ul className="pd-moods" aria-label="Moods">
             {p.moods.map((m) => <li className="pd-moods__pill" key={m}>{m}</li>)}
           </ul>
-          <Link to={findHref} className="op-btn op-btn--primary pd-hero__cta">FIND A STORE</Link>
-          <p className="pd-hero__fine">Sold only at licensed cannabis retailers.</p>
+          <AddToCart slug={p.slug} />
           <div className="pd-acc" key={p.slug}>
             <details className="pd-acc__item" open>
               <summary className="pd-acc__summary">Description</summary>
