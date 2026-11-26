@@ -37,7 +37,7 @@ export default function ProductsPage() {
           Explore all nine MWAH 1g all-in-one cannabis vape pen flavors. Each lip-gloss-shaped device uses ceramic heating, auto-draw activation, and USB-C charging. MWAH is sold only through licensed cannabis retailers.
         </p>
         <div className="products-hero__actions">
-          <Link className="op-btn op-btn--primary" to="/#find-us">FIND A STORE</Link>
+          <Link className="op-btn op-btn--primary" to="/wholesale">ADD TO CART</Link>
           <Link className="op-btn op-btn--secondary" to="/#products">VIEW THE HOMEPAGE COLLECTION</Link>
         </div>
       </section>

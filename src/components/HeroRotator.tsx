@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { emit } from "../lib/bus";
+import { Link, useNavigate } from "react-router-dom";
+import { useOrder } from "../lib/order";
 import { readStorage, writeStorage } from "../lib/dom";
 
 const AUTO_DELAY = 6000;
@@ -32,6 +33,8 @@ export default function HeroRotator() {
   const viewportRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLElement | null)[]>([]);
   const slideCount = 2;
+  const { add } = useOrder();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (reduced) setPaused(true);
@@ -132,8 +135,8 @@ export default function HeroRotator() {
             <h2 className="sm-hero__title">Latte Lover.</h2>
             <p className="sm-hero__sub">Rich coffee. Creamy vanilla, smooth, comforting.<br />A 1g all-in-one sativa cannabis vape pen.</p>
             <div className="op-hero__cta-row">
-              <a href="#products" className="op-btn op-btn--primary">SEE THE LINE</a>
-              <a href="#find-us" className="op-btn op-btn--secondary" data-locator-flavor="latte-lover" onClick={() => emit("locator:flavor", { flavor: "latte-lover" })}>FIND A STORE</a>
+              <a href="#products" className="op-btn op-btn--primary">PRODUCTS</a>
+              <button type="button" className="op-btn op-btn--secondary" onClick={() => { add("latte-lover", 1); navigate("/wholesale#order"); }}>ADD TO CART</button>
             </div>
           </div>
         </article>
@@ -148,8 +151,8 @@ export default function HeroRotator() {
             <h2 className="sm-hero__title">Cannabis designed for her.</h2>
             <p className="sm-hero__sub">The prettiest thing in your bag: A 1g all-in-one cannabis vape pen.<br />For all the baddies.</p>
             <div className="op-hero__cta-row">
-              <a href="#products" className="op-btn op-btn--primary">SEE THE LINE</a>
-              <a href="#find-us" className="op-btn op-btn--secondary">FIND A STORE</a>
+              <a href="#products" className="op-btn op-btn--primary">PRODUCTS</a>
+              <Link to="/wholesale" className="op-btn op-btn--secondary">ADD TO CART</Link>
             </div>
           </div>
         </article>

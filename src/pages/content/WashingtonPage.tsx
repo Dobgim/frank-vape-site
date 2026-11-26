@@ -13,7 +13,7 @@ export default function WashingtonPage() {
           <h1 id="marketTitle">MWAH cannabis vape pens in Washington</h1>
           <p className="market-hero__answer">MWAH 1g all-in-one cannabis vape pens are available through licensed Washington cannabis retailers. Use the live locator to check published availability across Washington before you go.</p>
           <div className="market-hero__actions">
-            <Link className="op-btn op-btn--primary" to="/?state=WA&status=stocked#find-us" data-analytics-action="find_store" data-analytics-location="washington_hub">FIND MWAH IN WASHINGTON</Link>
+            <Link className="op-btn op-btn--primary" to="/wholesale">ADD TO CART</Link>
             <Link className="op-btn op-btn--secondary" to="/products/" data-analytics-action="view_products" data-analytics-location="washington_hub">COMPARE FLAVORS</Link>
           </div>
         </div>

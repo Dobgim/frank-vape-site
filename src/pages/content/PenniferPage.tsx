@@ -77,7 +77,7 @@ export default function PenniferPage() {
               <p>Each MWAH features ceramic heating, auto-draw activation, and USB-C charging. Nine current flavor profiles span sativa, hybrid, and indica options, organized by vibe because nobody has time for a chemistry lecture while getting ready.</p>
               <p>Call yours Pennifer, Penny, Penelope, or simply your MWAH. The nickname is personal. The pen is available only through licensed cannabis retailers for adults 21 and older.</p>
               <p>Check the current{" "}<Link to="/washington/">Washington availability guide</Link>{" "}before you go.</p>
-              <Link className="op-btn op-btn--primary" to="/#find-us" data-analytics-action="find_store" data-analytics-location="kiss_labs_pennifer">FIND MWAH NEAR YOU</Link>
+              <Link className="op-btn op-btn--primary" to="/wholesale">ADD TO CART</Link>
             </div>
           </section>
         </div>

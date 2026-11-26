@@ -57,7 +57,7 @@ export default function AboutPage() {
           <p className="caption">FIND MWAH</p>
           <h2 id="findTitle">She’s probably already near you.</h2>
           <p>MWAH is sold only through licensed cannabis retailers. Check current availability, upcoming restocks, and store details before you go.</p>
-          <Link className="op-btn op-btn--primary" to="/#find-us" data-analytics-action="find_store" data-analytics-location="about">FIND MWAH NEAR YOU</Link>
+          <Link className="op-btn op-btn--primary" to="/wholesale">ADD TO CART</Link>
           <div className="about-market-links" aria-label="MWAH availability by state">
             <Link className="about-text-link" to="/washington/">WASHINGTON AVAILABILITY</Link>
           </div>
