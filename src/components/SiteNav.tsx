@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SOCIAL } from "../config";
 import { makeSiblingsInert, trapTab } from "../lib/dom";
+import { useOrder } from "../lib/order";
 import { CloseIcon, InstagramIcon, TikTokIcon, TrademarkMark, Wordmark, XIcon } from "./Icons";
 
 function Socials() {
@@ -29,11 +30,29 @@ export default function SiteNav() {
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
   const returnFocus = useRef(false);
+  const { totalUnits } = useOrder();
+  const cart = (
+    <Link
+      to="/wholesale#order"
+      className="op-nav__ig relative"
+      aria-label={totalUnits ? `Wholesale order, ${totalUnits} units` : "Wholesale order, empty"}
+    >
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M6 7h12l-1 13H7L6 7Z" />
+        <path d="M9 7a3 3 0 0 1 6 0" />
+      </svg>
+      {totalUnits > 0 && (
+        <span aria-hidden="true" className="absolute -top-1.5 -right-2 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-hot-pink px-1 text-[10px] font-bold leading-none text-ink max-md:top-1.5 max-md:right-0">
+          {totalUnits > 999 ? "999+" : totalUnits}
+        </span>
+      )}
+    </Link>
+  );
 
   const links = (
     <>
       <Link to={isHome ? "#products" : "/#products"} className="op-nav__link">PRODUCTS</Link>
-      <Link to={isHome ? "#find-us" : "/#find-us"} className="op-nav__link">FIND US</Link>
+      <Link to="/wholesale" className="op-nav__link">WHOLESALE</Link>
     </>
   );
 
@@ -84,7 +103,7 @@ export default function SiteNav() {
           <TrademarkMark className="op-nav__tm-svg" />
         </Link>
         <div className="op-nav__center">{links}</div>
-        <div className="op-nav__social"><Socials /></div>
+        <div className="op-nav__social"><Socials />{cart}</div>
       </nav>
       <div
         id="navDrawer"

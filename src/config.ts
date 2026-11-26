@@ -10,6 +10,9 @@
 export const SIGNUP_ENDPOINT = "";
 export const STORE_REQUEST_ENDPOINT = "";
 
+/** Wholesale orders are POSTed here; api/order.ts emails them (inbox set by the ORDER_EMAIL env var on Vercel). */
+export const ORDER_ENDPOINT = "/api/order";
+
 /** Local snapshot of the public retailer feed (public/data/stores.json). */
 export const STORE_FEED_URL = "/data/stores.json";
 

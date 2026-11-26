@@ -7,9 +7,11 @@ import SignupPopup from "./components/SignupPopup";
 import SiteFooter from "./components/SiteFooter";
 import SiteNav from "./components/SiteNav";
 import { AgeGateProvider } from "./lib/ageGate";
+import { OrderProvider } from "./lib/order";
 import HomePage from "./pages/HomePage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import ProductsPage from "./pages/ProductsPage";
+import WholesalePage from "./pages/WholesalePage";
 import AboutPage from "./pages/content/AboutPage";
 import KissLabsPage from "./pages/content/KissLabsPage";
 import NotFoundPage from "./pages/content/NotFoundPage";
@@ -95,6 +97,7 @@ function Layout() {
 export default function App() {
   return (
     <AgeGateProvider>
+      <OrderProvider>
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
@@ -102,6 +105,7 @@ export default function App() {
             <Route path="index.html" element={<HomePage />} />
             <Route path="products" element={<ProductsPage />} />
             <Route path="products/:slug" element={<ProductDetailPage />} />
+            <Route path="wholesale" element={<WholesalePage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="washington" element={<WashingtonPage />} />
             <Route path="kiss-labs" element={<KissLabsPage />} />
@@ -112,6 +116,7 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      </OrderProvider>
     </AgeGateProvider>
   );
 }
