@@ -33,7 +33,7 @@ export default function SiteFooter({ signup }: { signup?: ReactNode }) {
           </div>
           <div className="op-footer__col">
             <p className="op-footer__col-title">SITE</p>
-            <Link to="/#products" className="op-footer__link">PRODUCTS</Link>
+            <Link to="/products/" className="op-footer__link">PRODUCTS</Link>
             <Link to="/#find-us" className="op-footer__link">FIND US</Link>
             <Link to="/about" className="op-footer__link">ABOUT</Link>
             <Link to="/kiss-labs/" className="op-footer__link">KISS LABS</Link>

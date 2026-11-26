@@ -135,7 +135,7 @@ export default function HeroRotator() {
             <h2 className="sm-hero__title">Latte Lover.</h2>
             <p className="sm-hero__sub">Rich coffee. Creamy vanilla, smooth, comforting.<br />A 1g all-in-one sativa cannabis vape pen.</p>
             <div className="op-hero__cta-row">
-              <a href="#products" className="op-btn op-btn--primary">PRODUCTS</a>
+              <Link to="/products/" className="op-btn op-btn--primary">PRODUCTS</Link>
               <button type="button" className="op-btn op-btn--secondary" onClick={() => { add("latte-lover", 1); navigate("/wholesale#order"); }}>ADD TO CART</button>
             </div>
           </div>
@@ -151,7 +151,7 @@ export default function HeroRotator() {
             <h2 className="sm-hero__title">Cannabis designed for her.</h2>
             <p className="sm-hero__sub">The prettiest thing in your bag: A 1g all-in-one cannabis vape pen.<br />For all the baddies.</p>
             <div className="op-hero__cta-row">
-              <a href="#products" className="op-btn op-btn--primary">PRODUCTS</a>
+              <Link to="/products/" className="op-btn op-btn--primary">PRODUCTS</Link>
               <Link to="/wholesale" className="op-btn op-btn--secondary">ADD TO CART</Link>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PRODUCTS, type Product } from "../data/products";
 import { useAgeGate } from "../lib/ageGate";
 
@@ -41,6 +41,9 @@ export default function ProductCoverflow({ progressFillRef, progressCountRef }: 
   const rowRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const { accepted } = useAgeGate();
+  const navigate = useNavigate();
+  const navigateRef = useRef(navigate);
+  navigateRef.current = navigate;
   const acceptedRef = useRef(accepted);
   acceptedRef.current = accepted;
 
@@ -173,7 +176,9 @@ export default function ProductCoverflow({ progressFillRef, progressCountRef }: 
     cards.forEach((card) => {
       listen(card, "click", (e) => {
         if ((e.target as Element).closest("a")) return;
-        if (!card.classList.contains("is-focal")) scrollCardToCenter(card);
+        // Tapping anywhere on a card opens that product page.
+        const href = card.querySelector(".op-card__detail")?.getAttribute("href");
+        if (href) navigateRef.current(href);
       });
       const link = card.querySelector(".op-card__detail");
       if (link) listen(link, "focus", () => { if (!card.classList.contains("is-focal")) scrollCardToCenter(card); });

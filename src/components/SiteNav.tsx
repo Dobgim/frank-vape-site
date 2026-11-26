@@ -24,7 +24,6 @@ function Socials() {
 /** Shared navigation (nav.js): PRODUCTS / FIND US anchors keep the one-page model. */
 export default function SiteNav() {
   const { pathname } = useLocation();
-  const isHome = pathname === "/" || pathname === "/index.html";
   const [open, setOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
@@ -51,7 +50,7 @@ export default function SiteNav() {
 
   const links = (
     <>
-      <Link to={isHome ? "#products" : "/#products"} className="op-nav__link">PRODUCTS</Link>
+      <Link to="/products/" className="op-nav__link">PRODUCTS</Link>
       <Link to="/wholesale" className="op-nav__link">ADD TO CART</Link>
     </>
   );
